@@ -9,6 +9,76 @@ html {
 
 body {
     min-height: 100vh;
+    min-width: 320px;
     margin: 0;
     font-family: Tahoma, system-ui;
+    background: cornflowerblue;
+}
+
+h1 {
+    color: #ebf4ff;
+    letter-spacing: 4px;
+    text-shadow: 0 1px 2px #06487d;
+    text-align: center;
+}
+
+.content {
+    margin: 0 auto;
+    max-width: 900px;
+    padding: 20px;
+}
+
+.calculator {
+    border-radius: 4px;
+    overflow: hidden;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.buttons-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(30px, auto);
+}
+
+.buttons-grid button:last-child {
+    grid-column: 1 / span 4;
+}
+
+.grid-button {
+    padding: 8px;
+    margin: 0;
+    border: 1px solid lightskyblue;
+    background: steelblue;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.calculator__display {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 8px;
+
+    background-color: mediumseagreen;
+    border: 1px solid #95ffc3;
+    min-height: 3rem;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.grid-button:hover {
+    filter: brightness(1.2);
+}
+
+.grid-button:active {
+    filter: brightness(0.9);
+}
+
+.grid-button--controls {
+    background-color: #f39448;
+    border: 1px solid #fdbe91;
 }

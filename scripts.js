@@ -70,7 +70,10 @@ function populateDisplay(displayString, storeAndClear = false) {
 }
 
 function addNumber(key) {
-    if(calculated) setDisplayValue(''); // start from new if user types number with result of last operation
+    if(calculated) { // start from new if user types number with result of last operation
+        setDisplayValue('');
+        calculated = false;
+    }
 
     const number = this.textContent || key;
 

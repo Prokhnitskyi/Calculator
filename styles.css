@@ -42,7 +42,7 @@ h1 {
 }
 
 .buttons-grid button:last-child {
-    grid-column: 1 / span 4;
+    grid-column: 1 / 5;
 }
 
 .grid-button {
@@ -78,7 +78,7 @@ h1 {
     filter: brightness(0.9);
 }
 
-.grid-button--controls {
+.grid-button--controls, .grid-button--clear, .grid-button--operate {
     background-color: #f39448;
     border: 1px solid #fdbe91;
 }

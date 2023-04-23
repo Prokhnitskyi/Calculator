@@ -63,6 +63,8 @@ function addOperator(key) {
         return;
     }
 
+    if(firstValue && secondValue) calculate();
+
     if(display.textContent !== '') {
         start = false;
         operator = selectedOperator;
@@ -93,7 +95,45 @@ function calculate() {
     display.textContent = firstValue;
 }
 
+function handleKeyboard (event) {
+    if (event.key === 'Backspace') {
+        removeSymbol();
+        return;
+    }
+
+    if (event.key === '=' || event.key === 'Enter') {
+        calculate();
+        return;
+    }
+
+    type(event);
+
+}
+
+function removeSymbol() {
+    if (start) {
+        firstValue = firstValue.slice(0, -1);
+        display.textContent = firstValue;
+    } else {
+        secondValue = secondValue.slice(0, -1);
+        display.textContent = secondValue;
+    }
+}
+
+function type(event) {
+    const key = event.key;
+    const numbersRegex = new RegExp(/[\d\.,]/, 'i');
+    const operatorsRegex = new RegExp(/[\-+\/\*]/, 'i');
+
+    if (key.match(numbersRegex)) {
+        addNumber(key);
+    } else if (key.match(operatorsRegex)) {
+        addOperator(key)
+    }
+}
+
 digitButtons.forEach((btn) => btn.addEventListener('click', addNumber));
 controlButtons.forEach((btn) => btn.addEventListener('click', addOperator));
+document.addEventListener('keydown', handleKeyboard);
 clearButton.addEventListener('click', clear);
 operateButton.addEventListener('click', calculate);

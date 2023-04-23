@@ -48,12 +48,13 @@ function operate(firstNumber, secondNumber, operator) {
     }
 
     secondValue = '';
-    return result;
+    return parseFloat(result.toPrecision(8));
 }
 
 function addNumber(key) {
     const number = this.textContent || key;
     if (number === '.' && display.textContent.includes('.')) return;
+    if(display.textContent.length > 24) return;
     populate(number);
 }
 

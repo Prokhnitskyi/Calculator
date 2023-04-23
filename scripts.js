@@ -86,7 +86,11 @@ function populate(stringValue) {
 }
 
 function clear() {
-    firstValue = secondValue = display.textContent = shownOperator.textContent = '';
+    firstValue = '';
+    secondValue = '';
+    display.textContent = '';
+    shownOperator.textContent = '';
+    start = true;
 }
 
 function calculate() {

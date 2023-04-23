@@ -1,12 +1,15 @@
-const display = document.querySelector('.calculator__display');
+const display = document.querySelector('.display-number');
+const shownOperator = document.querySelector('.display-operator');
 const digitButtons = document.querySelectorAll('.grid-button--digit');
 const controlButtons = document.querySelectorAll('.grid-button--controls');
 const clearButton = document.querySelector('.grid-button--clear');
 const operateButton = document.querySelector('.grid-button--operate');
-let displayBuffer = '';
-let firstNumber;
-let operator;
-let calculated = false;
+
+let firstValue = '';
+let secondValue = '';
+let start = true;
+let operator = '';
+
 
 function add(a, b) {
     return parseFloat(a) + parseFloat(b);
@@ -43,94 +46,53 @@ function operate(firstNumber, secondNumber, operator) {
         default:
             throw new Error('Unknown operation');
     }
-    calculated = true;
+
     return result;
 }
 
-function type(event) {
-    const key = event.key;
-    const numbersRegex = new RegExp(/[\d\.,]/, 'i');
-    const operatorsRegex = new RegExp(/[\-+\/\*]/, 'i');
-
-    if (key.match(numbersRegex)) {
-        addNumber(key);
-    } else if (key.match(operatorsRegex)) {
-        addOperator(key)
-    }
-}
-
-function populateDisplay(displayString, storeAndClear = false) {
-    if (storeAndClear) {
-        firstNumber = displayBuffer;
-        displayBuffer = '';
-        display.textContent = displayString;
-    } else {
-        setDisplayValue(displayBuffer + displayString);
-    }
-}
-
 function addNumber(key) {
-    if(calculated) { // start from new if user types number with result of last operation
-        setDisplayValue('');
-        calculated = false;
-    }
-
     const number = this.textContent || key;
-
-    if (number === '.' && displayBuffer.includes('.')) return;
-
-    populateDisplay(number);
+    if (number === '.' && display.textContent.includes('.')) return;
+    populate(number);
 }
 
 function addOperator(key) {
-    const pushedOperator = this.textContent || key;
-
-    if (displayBuffer === '' && pushedOperator === '-') {
-        setDisplayValue(pushedOperator);
+    const selectedOperator = this.textContent || key;
+    if (display.textContent === '' && selectedOperator === '-') {
+        populate(selectedOperator);
         return;
     }
-    if (displayBuffer !== '') {
-        populateDisplay(pushedOperator, true);
-        operator = pushedOperator;
+
+    if(display.textContent !== '') {
+        start = false;
+        operator = selectedOperator;
+        shownOperator.textContent = operator;
+        display.textContent = '';
+    }
+}
+
+function populate(stringValue) {
+    display.textContent += stringValue;
+    if (start === true) {
+        firstValue = display.textContent;
+    } else {
+        shownOperator.textContent = '';
+        secondValue = display.textContent;
     }
 }
 
 function clear() {
-    setDisplayValue('');
-    firstNumber = '';
-    calculated = false;
+    firstValue = secondValue = display.textContent = shownOperator.textContent = '';
 }
 
 function calculate() {
-    const result = operate(firstNumber, displayBuffer, operator);
-    setDisplayValue(result);
+    if (!firstValue || !secondValue) return;
+
+    firstValue = operate(firstValue, secondValue, operator);
+    start = false;
+    display.textContent = firstValue;
 }
 
-function handleKeyboard (event) {
-    if (event.key === 'Backspace') {
-        setDisplayValue(displayBuffer.slice(0, -1));
-        return;
-    }
-
-    if (event.key === '=') {
-        calculate();
-    } else {
-        type(event);
-    }
-}
-
-function setDisplayValue(value) {
-    if (Number.isNaN(value)) {
-        clear();
-        display.textContent = 'ERROR';
-        return;
-    }
-
-    displayBuffer = value;
-    display.textContent = value;
-}
-
-document.addEventListener('keydown', handleKeyboard);
 digitButtons.forEach((btn) => btn.addEventListener('click', addNumber));
 controlButtons.forEach((btn) => btn.addEventListener('click', addOperator));
 clearButton.addEventListener('click', clear);

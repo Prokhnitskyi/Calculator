@@ -47,6 +47,7 @@ function operate(firstNumber, secondNumber, operator) {
             throw new Error('Unknown operation');
     }
 
+    secondValue = '';
     return result;
 }
 

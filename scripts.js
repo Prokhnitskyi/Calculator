@@ -89,7 +89,7 @@ function clear() {
 }
 
 function calculate() {
-    if (!firstValue || !secondValue) return;
+    if (!firstValue || !secondValue || display.textContent === '.') return;
 
     firstValue = operate(firstValue, secondValue, operator);
     start = false;

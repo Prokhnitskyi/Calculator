@@ -13,6 +13,10 @@ body {
     margin: 0;
     font-family: Tahoma, system-ui;
     background: cornflowerblue;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 h1 {
@@ -24,11 +28,13 @@ h1 {
 
 .content {
     margin: 0 auto;
+    min-width: 80vw;
     max-width: 900px;
     padding: 20px;
 }
 
 .calculator {
+    border: 2px solid blanchedalmond;
     border-radius: 4px;
     overflow: hidden;
     max-width: 640px;
@@ -81,4 +87,20 @@ h1 {
 .grid-button--controls, .grid-button--clear, .grid-button--operate {
     background-color: #f39448;
     border: 1px solid #fdbe91;
+}
+
+.footer {
+    background-color: #1b273c;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer a, .footer a:visited {
+    text-decoration: none;
+    color: mediumseagreen;
+}
+
+.footer a:hover {
+    filter: brightness(1.2);
 }
